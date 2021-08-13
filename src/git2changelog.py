@@ -22,6 +22,7 @@
 
 import subprocess
 import csv
+import codecs
 from dateutil.parser import parse
 from optparse import OptionParser
 import os
@@ -116,25 +117,25 @@ class CLData:
         for row in data:
             r_check,release = self._formatRelease(row[6])
             if r_check:
-                print "\n* %s %s <%s> %s" % (self._formatDate(row[1]),row[2],row[3],release)
+                print("\n* %s %s <%s> %s" % (self._formatDate(row[1]),row[2],row[3],release))
                 if self.search_terms:
                     for item in self.search_terms:
                         if item in row[5]:
-                            print "- %s : Commit %s" % (row[5],row[4])
+                            print("- %s : Commit %s" % (row[5],row[4]))
                             break
                 else:
-                    print "- %s : Commit %s" % (row[5],row[4])
+                    print("- %s : Commit %s" % (row[5],row[4]))
             else:
                 if self.search_terms:    #if we want to limit the output to lines with certain strings in the comment
                     for item in self.search_terms:
                         if item in row[5]:
-                            print "- %s : Commit %s" % (row[5],row[4])
+                            print("- %s : Commit %s" % (row[5],row[4]))
                 else:   #if we want all of the commits - no search term given
-                    print "- %s : Commit %s" % (row[5],row[4])
+                    print("- %s : Commit %s" % (row[5],row[4]))
 
     def formatChangeLog(self):
 
         data = self._getGitLog()
-        raw_data = csv.reader(data)
+        raw_data = csv.reader(codecs.iterdecode(data, 'utf-8'))
         if self.log_format == 'rpm':
             self._generateRPMChangeLog(raw_data)
