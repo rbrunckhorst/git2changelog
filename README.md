@@ -4,9 +4,9 @@ git2changelog
 # Adapted to work with python3
 
 # Installation
-pip3 install python-dateutil
-python3 setup.py build
-python3 setup.py install
+- pip3 install python-dateutil
+- python3 setup.py build
+- python3 setup.py install
 
 # Purpose
 git2changelog analyzes git repositories to generate formatted changelogs
